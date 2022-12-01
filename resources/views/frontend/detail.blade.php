@@ -144,10 +144,10 @@
     <script>
         $(document).ready(function() {
             $(".xzoom, .xzoom-gallery").xzoom({
-                zoomwidth: 20,
+                zoomwidth: 120,
                 title: false,
                 tint: '#679',
-                pageXOffset: 2
+                pageXOffset: 10
             });
         });
     </script>

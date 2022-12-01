@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\TravelController;
 use App\Http\Controllers\Backend\MultiImgController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\DetailController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -28,12 +29,12 @@ Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail')
 
 
 Route::middleware(['auth', 'verified'])->group(function(){    
-
-Route::post('/checkout/{id}', [CheckoutController::class, 'process'])
-    ->name('checkout_process');
     
-Route::get('/checkout/{id}', [CheckoutController::class, 'index'])
-    ->name('checkout');
+    Route::get('/checkout/{id}', [CheckoutController::class, 'index'])
+        ->name('checkout');
+
+    Route::post('/checkout/{id}', [CheckoutController::class, 'process'])
+    ->name('checkout_process');
   
 
 Route::post('/checkout/create/{detail_id}', [CheckoutController::class, 'create'])
@@ -48,9 +49,9 @@ Route::get('/checkout/confirm/{id}', [CheckoutController::class, 'success'])
     ->name('checkout-success');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
