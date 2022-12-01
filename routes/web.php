@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\TravelController;
 use App\Http\Controllers\Backend\MultiImgController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Frontend\DetailController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\Travel;
@@ -20,16 +22,36 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail');
+
+
+Route::middleware(['auth', 'verified'])->group(function(){    
+
+Route::post('/checkout/{id}', [CheckoutController::class, 'process'])
+    ->name('checkout_process');
+    
+Route::get('/checkout/{id}', [CheckoutController::class, 'index'])
+    ->name('checkout');
+  
+
+Route::post('/checkout/create/{detail_id}', [CheckoutController::class, 'create'])
+    ->name('checkout-create');
+
+
+Route::get('/checkout/remove/{detail_id}', [CheckoutController::class, 'remove'])
+    ->name('checkout-remove');
+  
+
+Route::get('/checkout/confirm/{id}', [CheckoutController::class, 'success'])
+    ->name('checkout-success');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-require __DIR__.'/auth.php';
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');   
@@ -75,3 +97,6 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){
 
     });
 });
+
+require __DIR__.'/auth.php';
+

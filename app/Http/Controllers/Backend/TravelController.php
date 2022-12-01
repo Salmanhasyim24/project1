@@ -18,7 +18,7 @@ class TravelController extends Controller
      */
     public function index()
     {
-        $items = Travel::latest()->get();
+        $items = Travel::all();
         return view('backend.travel.index',[
             'items' => $items
         ]);
@@ -88,13 +88,14 @@ class TravelController extends Controller
      * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
     //mengupdate data
     $data = $request->all();
     $data['slug'] = Str::slug($request->title);
 
-    $item = Travel::findOrFail($id);
+  $id = $request->id;
+        $item = Travel::findOrFail($id);
 
     $item->update($data);
 

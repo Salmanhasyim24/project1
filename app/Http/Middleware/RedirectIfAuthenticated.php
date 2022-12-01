@@ -25,7 +25,7 @@ class RedirectIfAuthenticated
               if (Auth::guard($guard)->check()) {
 
                 if(Auth::check() && Auth::user()->role == 'user'){
-                    return redirect('/dashboard');
+                    return redirect('/');
 
                 }if(Auth::check() && Auth::user()->role == 'vendor'){
                     return redirect('/vendor/dashboard');

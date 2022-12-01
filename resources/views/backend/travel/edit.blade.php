@@ -31,9 +31,9 @@
                             <div class="card-body">
 
                                 <form id="myForm" method="post" action="{{ route('travel.update', $item->id) }}">
-                                    @method('PUT')
                                     @csrf
 
+                                    <input type="hidden" name="id" value="{{ $item->id }}">
                                     <div class="form-group mb-3">
                                         <label for="title" class="form-label">Title</label>
                                         <input type="text" name="title" value="{{ $item->title }}"
